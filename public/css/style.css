@@ -1,5 +1,5 @@
 body {
-    background-color: #e6e6e6;
+    background-color: #eeeeee;
     margin: 0 auto;
 }
 .main-menu {
@@ -15,5 +15,10 @@ div.main-content {
     color: #464646;
 }
 h1 {
-    color: #146460;
+    color: #2c2c2c;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+th {
+    text-transform: uppercase;
 }
