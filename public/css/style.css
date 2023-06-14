@@ -1,0 +1,19 @@
+body {
+    background-color: #e6e6e6;
+    margin: 0 auto;
+}
+.main-menu {
+    background-color: #206169;
+}
+a.main-menu {
+    color: #ffffff;
+}
+a.main-menu:hover {
+    color: #2cdbd3;
+}
+div.main-content {
+    color: #464646;
+}
+h1 {
+    color: #146460;
+}
