@@ -2,17 +2,22 @@ body {
     background-color: #eeeeee;
     margin: 0 auto;
 }
-.main-menu {
-    background-color: #206169;
+div.main-menu {
+    background-color: #1b4449;
+    border-bottom: 1px solid #0f2c30;
 }
-a.main-menu {
+a.main-menu, a.bar-link {
     color: #ffffff;
 }
-a.main-menu:hover {
+a.main-menu:hover, a.bar-link:hover {
     color: #2cdbd3;
 }
 div.main-content {
     color: #464646;
+}
+div.bar {
+    background-color: #0f2c30;
+    font-size: 13px;
 }
 h1 {
     color: #2c2c2c;
@@ -21,4 +26,7 @@ h1 {
 }
 th {
     text-transform: uppercase;
+}
+li {
+    line-height: 0px;
 }
