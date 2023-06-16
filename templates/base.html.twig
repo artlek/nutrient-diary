@@ -14,7 +14,7 @@
             <div class="container-lg d-flex justify-content-end">
                 {% block bar %}
                     {% if is_granted('ROLE_USER') %}
-                        <a class="nav-link bar-link" href="#">Logged as: ...</a>
+                        <span class="bar">Logged as: </span><a class="nav-link bar-link" href="#">logout</a>
                     {% else %}
                         <ul class="nav">
                             <li class="nav-item">
@@ -56,7 +56,9 @@
             {% for message in app.flashes('positive') %}<div class="alert alert-success my-3">{{ message }}</div>{% endfor %}
             {% for message in app.flashes('negative') %}<div class="alert alert-danger my-3">{{ message }}</div>{% endfor %}
             {% for message in app.flashes('neutral') %}<div class="alert alert-secondary my-3">{{ message }}</div>{% endfor %}
-            {% block body %}{% endblock %}
+            <div class="container-lg main-content my-3 p-3">
+                {% block body %}{% endblock %}
+            </div>
         </div>
     </body>
 </html>

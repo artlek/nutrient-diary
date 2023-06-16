@@ -19,6 +19,20 @@ div.bar {
     background-color: #0f2c30;
     font-size: 13px;
 }
+div.registration {
+    max-width: 600px;
+}
+div.form-label {
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+div.form-errors {
+    font-size: 13px;
+    color: #c71717;
+}
+input.form-control {
+    border-radius: 0px;
+}
 h1 {
     color: #2c2c2c;
     text-transform: uppercase;
@@ -27,6 +41,9 @@ h1 {
 th {
     text-transform: uppercase;
 }
-li {
+li.nav-item {
     line-height: 0px;
+}
+span.bar {
+    color: #ffffff;
 }
