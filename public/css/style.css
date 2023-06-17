@@ -6,7 +6,7 @@ div.main-menu {
     background-color: #1b4449;
     border-bottom: 1px solid #0f2c30;
 }
-a.main-menu, a.bar-link {
+a.main-menu, a.bar-link, a.main-menu:visited, a.bar-link:visited {
     color: #ffffff;
 }
 a.main-menu:hover, a.bar-link:hover {
@@ -25,6 +25,8 @@ div.registration {
 div.form-label {
     margin-top: 10px;
     margin-bottom: 0px;
+    font-size: 14px;
+    color: #6d6d6d;
 }
 div.form-errors {
     font-size: 13px;
@@ -32,6 +34,8 @@ div.form-errors {
 }
 input.form-control {
     border-radius: 0px;
+    border: 1px solid #a7a7a7;
+    color: #666666;
 }
 h1 {
     color: #2c2c2c;
@@ -46,4 +50,7 @@ li.nav-item {
 }
 span.bar {
     color: #ffffff;
+}
+button.btn {
+    border-radius: 0px;
 }

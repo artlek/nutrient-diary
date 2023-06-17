@@ -14,14 +14,23 @@
             <div class="container-lg d-flex justify-content-end">
                 {% block bar %}
                     {% if is_granted('ROLE_USER') %}
-                        <span class="bar">Logged as: </span><a class="nav-link bar-link" href="#">logout</a>
+                        
+
+                        <ul class="nav">
+                            <li class="nav-item">
+                                <a class="nav-link bar-link" href="#">Hello, {{ app.user.name }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link bar-link" href="{{ path('logout') }}">Logout</a>
+                            </li>
+                        </ul>
                     {% else %}
                         <ul class="nav">
                             <li class="nav-item">
-                                <a class="nav-link bar-link" href="#">Login</a>
+                                <a class="nav-link bar-link" href="{{ path('login') }}">Login</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link bar-link" href="#">Register</a>
+                                <a class="nav-link bar-link" href="{{ path('register') }}">Register</a>
                             </li>
                         </ul>
                     {% endif %}
