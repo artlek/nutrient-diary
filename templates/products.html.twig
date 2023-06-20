@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Product list - Nutrient Diary{% endblock %}
+
+{% block body %}
+
+<div class="container-fluid bg-light m-2 p-5 content">
+    <div class="row mb-5">
+        <div class="col-8"><h1>Product list</h1></div>
+        <div class="col-4 text-end align-self-end">
+            <button class="btn btn-success px-4">Add</button>
+        </div>
+    </div>
+    {% if products is empty %}
+        <div class="alert alert-dark">No products</div>
+    {% else %}
+        <div class="table-responsive">
+            <table class="table mt-2">
+                <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">product name</th>
+                        <th scope="col">fat [g]</th>
+                        <th scope="col">carbo [g]</th>
+                        <th scope="col">protein [g]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% set counter = 1 %}
+                {% for product in products %}
+                    <tr>
+                        <td>{{ counter }}.</td>
+                        <td>{{ product.name }}</td>
+                        <td>{{ product.getFat }}</td>
+                        <td>{{ product.getCarbo }}</td>
+                        <td>{{ product.getProtein }}</td>
+                    </tr>
+                    {% set counter = counter + 1 %}
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+</div>
+
+{% endblock %}
