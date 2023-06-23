@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Add product - Nutrient Diary{% endblock %}
+
+{% block body %}
+
+  
+    <div class="add-product flex-fill bg-light m-2 p-5 content">
+        <h1>Add product</h1>
+        {{ form_start(addProductForm) }}
+            <div class="form-label"> {{ form_label(addProductForm.name, 'Product name') }} </div>
+            {{ form_widget(addProductForm.name, {'attr': {'class': 'form-control'}}) }}
+            <div class="form-errors"> {{ form_errors(addProductForm.name) }} </div>
+
+            <div class="form-label"> {{ form_label(addProductForm.fat, 'Fat content in 100 g (ml)') }} </div>
+            {{ form_widget(addProductForm.fat, {'attr': {'class': 'form-control'}}) }}
+            <div class="form-errors"> {{ form_errors(addProductForm.fat) }} </div>
+
+            <div class="form-label"> {{ form_label(addProductForm.carbo, 'Carbohydrate content in 100 g (ml)') }} </div>
+            {{ form_widget(addProductForm.carbo, {'attr': {'class': 'form-control'}}) }}
+            <div class="form-errors"> {{ form_errors(addProductForm.carbo) }} </div>
+                
+            <div class="form-label"> {{ form_label(addProductForm.protein, 'Protein content in 100 g (ml)') }} </div>
+            {{ form_widget(addProductForm.protein, {'attr': {'class': 'form-control'}}) }}
+            <div class="form-errors"> {{ form_errors(addProductForm.protein) }} </div>
+
+            {{ form_row(addProductForm.add, { 'label': 'Add product', 'attr': {'class': 'btn btn-success mt-3 mb-3 d-grid gap-2 col-12 mx-auto'} }) }}
+        {{ form_end(addProductForm) }}
+    </div>
+
+{% endblock %}

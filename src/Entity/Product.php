@@ -6,6 +6,7 @@ use App\Repository\ProductRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 class Product
@@ -15,16 +16,36 @@ class Product
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\Regex('/^[a-zA-Z0-9\.)(,\s-]{3,50}$/', message: 'Invalid data. Only digits, letters and dot, bracket, comma and dash mark. Min. 2 and max. 50 characters.')]
     #[ORM\Column(length: 255)]
+    #[Assert\Type('string')]
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'products', targetEntity: ProductHasNutrients::class)]
     private Collection $hasNutrients;
 
+    #[Assert\Type('float')]
+    #[Assert\Range(
+        min: 0,
+        max: 100,
+        notInRangeMessage: 'Fat content must be between {{ min }} and {{ max }} g (ml)',
+    )]
     private ?float $fat = null;
 
+    #[Assert\Type('float')]
+    #[Assert\Range(
+        min: 0,
+        max: 100,
+        notInRangeMessage: 'Carbohydrate content must be between {{ min }} and {{ max }} g (ml)',
+    )]
     private ?float $carbo = null;
 
+    #[Assert\Type('float')]
+    #[Assert\Range(
+        min: 0,
+        max: 100,
+        notInRangeMessage: 'Protein content must be between {{ min }} and {{ max }} g (ml)',
+    )]
     private ?float $protein = null;
 
     #[ORM\Column]

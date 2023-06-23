@@ -62,10 +62,10 @@
             </div>
         </div>
         <div class="container-fluid">
-            {% for message in app.flashes('positive') %}<div class="alert alert-success my-3">{{ message }}</div>{% endfor %}
-            {% for message in app.flashes('negative') %}<div class="alert alert-danger my-3">{{ message }}</div>{% endfor %}
-            {% for message in app.flashes('neutral') %}<div class="alert alert-secondary my-3">{{ message }}</div>{% endfor %}
             <div class="container-lg main-content p-3">
+                {% for message in app.flashes('positive') %}<div class="alert alert-success my-3">{{ message }}</div>{% endfor %}
+                {% for message in app.flashes('negative') %}<div class="alert alert-danger my-3">{{ message }}</div>{% endfor %}
+                {% for message in app.flashes('neutral') %}<div class="alert alert-secondary my-3">{{ message }}</div>{% endfor %}
                 {% block body %}{% endblock %}
             </div>
         </div>

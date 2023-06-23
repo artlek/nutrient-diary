@@ -8,7 +8,7 @@
     <div class="row mb-5">
         <div class="col-8"><h1>Product list</h1></div>
         <div class="col-4 text-end align-self-end">
-            <button class="btn btn-success px-4">Add</button>
+            <a href=" {{ path('add-product') }}"><button class="btn btn-success px-4">Add</button></a>
         </div>
     </div>
     {% if products is empty %}
@@ -21,7 +21,7 @@
                         <th scope="col"></th>
                         <th scope="col">product name</th>
                         <th scope="col">fat [g]</th>
-                        <th scope="col">carbo [g]</th>
+                        <th scope="col">carbohydrate [g]</th>
                         <th scope="col">protein [g]</th>
                     </tr>
                 </thead>
