@@ -12,7 +12,7 @@ class CheckIfProductExist
     {
     }
 
-    public function check(string $productName, User $user) : bool
+    public function check($productName, User $user) : bool
     {
         $product = $this->em->getRepository(Product::class)->findBy([
             'name' => $productName,

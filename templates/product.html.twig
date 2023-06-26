@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+
+    Product{% if product is null %} {% else %}: {{ product.name }} {% endif %} - Nutrient Diary
+
+{% endblock %}
+
+{% block body %}
+
+    {% if product is null %}
+        <div class="alert alert-danger">Product not found</div>
+    {% else %}
+        <div class="row">
+            <div class="col-lg bg-light m-2 p-5 content">
+                <h1>{{ product.name }}</h2>
+                    <div class="subheader">product id: {{ product.id }} </div>
+                    <div class="content-table m-4">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td>content</td>
+                                </tr>
+                                <tr>
+                                    <th>fat content</th>
+                                    <td>{{ product.fat }}</td>
+                                </tr>
+                                <tr>
+                                    <th>carbohydrate content</th>
+                                    <td>{{ product.carbo }}</td>
+                                </tr>
+                                <tr>
+                                    <th>protein content</th>
+                                    <td>{{ product.protein }}</td>
+                                </tr>
+                            <tbody>
+                            <caption>Nutrient content in 100 g (ml) of product</caption>
+                        </table>
+                    </div>    
+            </div>
+            <div class="col-lg bg-light m-2 p-5 content">
+                <h1>Edit nutrient content</h1>
+            
+                {{ form_start(editFatForm) }}
+                    <div class="form-label"> {{ form_label(editFatForm.fat, 'Fat') }} </div>
+                        <div class="d-flex align-items-start">
+                            {{ form_widget(editFatForm.fat, {'attr': {'class': 'form-control'}}) }}
+                            <button type="submit" class="btn btn-success ms-3">Edit</button>
+                        </div>
+                    <div class="form-errors m-1"> {{ form_errors(editFatForm.fat) }} </div>
+                {{ form_end(editFatForm) }}  
+               
+                {{ form_start(editCarboForm) }}
+                    <div class="form-label"> {{ form_label(editCarboForm.carbo, 'Carbo') }} </div>
+                        <div class="d-flex align-items-start">
+                            {{ form_widget(editCarboForm.carbo, {'attr': {'class': 'form-control'}}) }}
+                            <button type="submit" class="btn btn-success ms-3">Edit</button>
+                        </div>
+                    <div class="form-errors m-1"> {{ form_errors(editCarboForm.carbo) }} </div>
+                {{ form_end(editCarboForm) }}  
+
+                {{ form_start(editProteinForm) }}
+                    <div class="form-label m-1"> {{ form_label(editProteinForm.protein, 'Protein') }} </div>
+                        <div class="d-flex align-items-start">
+                            {{ form_widget(editProteinForm.protein, {'attr': {'class': 'form-control'}}) }}
+                            <button type="submit" class="btn btn-success ms-3">Edit</button>
+                        </div>
+                    <div class="form-errors"> {{ form_errors(editProteinForm.protein) }} </div>
+                {{ form_end(editProteinForm) }}   
+             
+            </div>
+        </div>
+        
+    {% endif %}
+
+{% endblock %}

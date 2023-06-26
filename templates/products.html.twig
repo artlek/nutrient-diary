@@ -23,6 +23,7 @@
                         <th scope="col">fat [g]</th>
                         <th scope="col">carbohydrate [g]</th>
                         <th scope="col">protein [g]</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -34,6 +35,7 @@
                         <td>{{ product.getFat }}</td>
                         <td>{{ product.getCarbo }}</td>
                         <td>{{ product.getProtein }}</td>
+                        <td><a class="link" href="/product/{{ product.id }}">details</a></td>
                     </tr>
                     {% set counter = counter + 1 %}
                 {% endfor %}

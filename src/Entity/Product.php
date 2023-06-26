@@ -16,7 +16,7 @@ class Product
     #[ORM\Column]
     private ?int $id = null;
 
-    #[Assert\Regex('/^[a-zA-Z0-9\.)(,\s-]{3,50}$/', message: 'Invalid data. Only digits, letters and dot, bracket, comma and dash mark. Min. 2 and max. 50 characters.')]
+    #[Assert\Regex('/^[a-zA-Z0-9\.)(,\s-]{3,50}$/', message: 'Invalid data. Only digits, letters and dot, bracket, comma and dash mark. Min. 3 and max. 50 characters.')]
     #[ORM\Column(length: 255)]
     #[Assert\Type('string')]
     private ?string $name = null;

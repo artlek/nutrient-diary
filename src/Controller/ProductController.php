@@ -7,11 +7,18 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Service\GetProductList;
 use App\Form\AddProductFormType;
+use App\Form\EditFatFormType;
+use App\Form\EditCarboFormType;
+use App\Form\EditProteinFormType;
 use App\Entity\Product;
+use App\Entity\ProductHasNutrients;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Service\AddProduct;
 use App\Service\CheckIfProductExist;
+use App\Service\ProcessEditFatForm;
+use App\Service\ProcessEditCarboForm;
+use App\Service\ProcessEditProteinForm;
 
 class ProductController extends AbstractController
 {
@@ -30,7 +37,7 @@ class ProductController extends AbstractController
         $this->denyAccessUnlessGranted('ROLE_USER');
         $product = new Product();
         $form = $this->createForm(AddProductFormType::class, $product)->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()){
+        if($form->isSubmitted() && $form->isValid() && $form->get('name')->getData() !== null && $form->get('fat')->getData() !== null && $form->get('carbo')->getData() !== null && $form->get('protein')->getData() !== null){
             if($check->check($product->getName(), $this->getUser())){
                 $this->addFlash(
                     'negative',
@@ -51,5 +58,63 @@ class ProductController extends AbstractController
         return $this->render('add-product.html.twig', [
             'addProductForm' => $form,
         ]);
+    }
+
+    #[Route('/product/{id}', name: 'product')]
+    public function showProduct($id, Request $request, EntityManagerInterface $em, ProcessEditFatForm $fatForm, ProcessEditCarboForm $carboForm, ProcessEditProteinForm $proteinForm): Response
+    {   
+        $this->denyAccessUnlessGranted('ROLE_USER');
+        $product = $em->getRepository(Product::class)->findOneBy(['id' => $id]);
+        if($product){
+            $product
+                ->setFat($product->getHasNutrients()->get(0)->getQuantity())
+                ->setCarbo($product->getHasNutrients()->get(1)->getQuantity())
+                ->setProtein($product->getHasNutrients()->get(2)->getQuantity())
+            ;
+            $editFatForm = $this->createForm(EditFatFormType::class)->handleRequest($request);
+            $editCarboForm = $this->createForm(EditCarboFormType::class)->handleRequest($request);
+            $editProteinForm = $this->createForm(EditProteinFormType::class)->handleRequest($request);
+            
+
+            if($fatForm->process($editFatForm, $product)){
+                $this->addFlash(
+                    'positive',
+                    'Product nutrient was edited'
+                );
+                return $this->redirect($id);
+            }
+
+            if($carboForm->process($editCarboForm, $product)){
+                $this->addFlash(
+                    'positive',
+                    'Product nutrient was edited'
+                );
+                return $this->redirect($id);
+            }
+
+            if($proteinForm->process($editProteinForm, $product)){
+                $this->addFlash(
+                    'positive',
+                    'Product nutrient was edited'
+                );
+                return $this->redirect($id);
+            }
+            
+
+            
+            return $this->render('product.html.twig', [
+                'product' => $product,
+                'editFatForm' => $editFatForm,
+                'editCarboForm' => $editCarboForm,
+                'editProteinForm' => $editProteinForm
+            ]);
+        }
+        else {
+            $this->addFlash(
+                'negative',
+                'Product not found'
+            );
+            return $this->redirectToRoute('products');
+        }
     }
 }

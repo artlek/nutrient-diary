@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ProductHasNutrientsRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ProductHasNutrientsRepository::class)]
 class ProductHasNutrients
@@ -21,6 +22,13 @@ class ProductHasNutrients
     private ?Product $products = null;
 
     #[ORM\Column]
+    #[Assert\NotNull]
+    #[Assert\Type('float')]
+    #[Assert\Range(
+        min: 0,
+        max: 100,
+        notInRangeMessage: 'Content must be between {{ min }} and {{ max }} g (ml)',
+    )]
     private ?float $quantity = null;
 
     public function getId(): ?int
@@ -59,7 +67,7 @@ class ProductHasNutrients
 
     public function setQuantity(float $quantity): self
     {
-        $this->quantity = $quantity;
+        $this->quantity = round($quantity, 2);
 
         return $this;
     }
