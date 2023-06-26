@@ -16,10 +16,4 @@ class SaveToDatabase
         $this->em->persist($object);
         $this->em->flush();
     }
-
-    public function delete($object) : void
-    {
-        $this->em->remove($object);
-        $this->em->flush();
-    }
 }

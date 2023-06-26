@@ -23,10 +23,10 @@
                             </button>
                             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                                 <div class="navbar-nav">
-                                    <a class="nav-link main-menu" href="#">Home</a>
+                                    <a class="nav-link main-menu" href="{{ path('index') }}">Home</a>
                                     {% if is_granted('ROLE_USER') %}
                                         <a class="nav-link main-menu" href="#">Diary</a>
-                                        <a class="nav-link main-menu" href="#">Product list</a>
+                                        <a class="nav-link main-menu" href="{{ path('products') }}">Product list</a>
                                     {% endif %}
                                     <a class="nav-link main-menu" href="#">About</a>
                                 </div>
@@ -42,7 +42,7 @@
                     {% if is_granted('ROLE_USER') %}
                         <ul class="nav">
                             <li class="nav-item">
-                                <a class="nav-link bar-link" href="#">Hello, {{ app.user.name }}</a>
+                                <a class="nav-link bar-link disabled" href="#">Logged as {{ app.user.name }}</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link bar-link" href="{{ path('logout') }}">Logout</a>

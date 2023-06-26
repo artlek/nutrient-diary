@@ -74,7 +74,6 @@ class ProductController extends AbstractController
             $editFatForm = $this->createForm(EditFatFormType::class)->handleRequest($request);
             $editCarboForm = $this->createForm(EditCarboFormType::class)->handleRequest($request);
             $editProteinForm = $this->createForm(EditProteinFormType::class)->handleRequest($request);
-            
 
             if($fatForm->process($editFatForm, $product)){
                 $this->addFlash(
@@ -99,8 +98,6 @@ class ProductController extends AbstractController
                 );
                 return $this->redirect($id);
             }
-            
-
             
             return $this->render('product.html.twig', [
                 'product' => $product,
