@@ -1,49 +1,66 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello DayController!{% endblock %}
+{% block title %}
+
+   
+
+{% endblock %}
 
 {% block body %}
 
-    <h1>product list</h1>
-    <div class="date">14 may 2023</div>
-        <table class="table my-3 table-striped table-hover">
-            <thead>
-                <tr>
-                <th scope="col"></th>
-                <th scope="col">product name</th>
-                <th scope="col">quantity [g/ml]</th>
-                <th scope="col">fat content [per 100 g]</th>
-                <th scope="col">carbo content [per 100 g]</th>
-                <th scope="col">protein content [per 100 g]</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Chicken</td>
-                    <td>150</td>
-                    <td>5.2</td>
-                    <td>19</td>
-                    <td>20.2</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Bread</td>
-                    <td>80</td>
-                    <td>3</td>
-                    <td>5</td>
-                    <td>6.1</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>Milk</td>
-                    <td>200</td>
-                    <td>3.2</td>
-                    <td>5.5</td>
-                    <td>6</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
 
+    <div class="row">
+        <div class="col-lg-7 bg-light m-2 p-5 content">
+            <h1>2023-05-03</h2>
+                <div class="table-responsive">
+                    <table class="table mt-2">
+                        <thead>
+                            <tr>
+                            <th scope="col"></th>
+                            <th scope="col">product</th>
+                            <th scope="col">qty [g/ml]</th>
+                            <th scope="col">fat [g/ml]</th>
+                            <th scope="col">carbo [g/ml]</th>
+                            <th scope="col">protein [g/ml]</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Chicken chi cken</td>
+                                <td>150</td>
+                                <td>5.2</td>
+                                <td>19</td>
+                                <td>20.2</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Bread</td>
+                                <td>80</td>
+                                <td>3</td>
+                                <td>5</td>
+                                <td>6.1</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Milk</td>
+                                <td>200</td>
+                                <td>3.2</td>
+                                <td>5.5</td>
+                                <td>6</td>
+                            </tr>
+                        </tbody>
+                        <caption>Nutrient consumption for the day</caption>
+                    </table>
+                </div>
+            </div>
+    <div class="col-lg bg-light m-2 p-5 content">
+        <h1>Targets</h1>
+
+        No target set
+       
+    </div>
+          
 {% endblock %}
+
+

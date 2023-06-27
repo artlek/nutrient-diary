@@ -12,7 +12,7 @@
         <div class="alert alert-danger">Product not found</div>
     {% else %}
         <div class="row">
-            <div class="col-lg bg-light m-2 p-5 content">
+            <div class="col-lg-7 bg-light m-2 p-5 content">
                 <h1>{{ product.name }}</h2>
                     <div class="subheader">product id: {{ product.id }} </div>
                     <div class="content-table m-4">
@@ -23,15 +23,15 @@
                                     <td>content</td>
                                 </tr>
                                 <tr>
-                                    <th>fat content</th>
+                                    <th>fat</th>
                                     <td>{{ product.fat }}</td>
                                 </tr>
                                 <tr>
-                                    <th>carbohydrate content</th>
+                                    <th>carbohydrate</th>
                                     <td>{{ product.carbo }}</td>
                                 </tr>
                                 <tr>
-                                    <th>protein content</th>
+                                    <th>protein</th>
                                     <td>{{ product.protein }}</td>
                                 </tr>
                             <tbody>
@@ -45,7 +45,10 @@
                 {{ form_start(editFatForm) }}
                     <div class="form-label"> {{ form_label(editFatForm.fat, 'Fat') }} </div>
                         <div class="d-flex align-items-start">
-                            {{ form_widget(editFatForm.fat, {'attr': {'class': 'form-control'}}) }}
+                            <div class="input-group mb-3">
+                                {{ form_widget(editFatForm.fat, {'attr': {'class': 'form-control'}}) }}
+                                <span class="input-group-text" id="basic-addon2">g (ml)</span>
+                            </div>
                             <button type="submit" class="btn btn-success ms-3">Edit</button>
                         </div>
                     <div class="form-errors m-1"> {{ form_errors(editFatForm.fat) }} </div>
@@ -54,16 +57,22 @@
                 {{ form_start(editCarboForm) }}
                     <div class="form-label"> {{ form_label(editCarboForm.carbo, 'Carbo') }} </div>
                         <div class="d-flex align-items-start">
-                            {{ form_widget(editCarboForm.carbo, {'attr': {'class': 'form-control'}}) }}
+                            <div class="input-group mb-3">
+                                {{ form_widget(editCarboForm.carbo, {'attr': {'class': 'form-control'}}) }}
+                                <span class="input-group-text" id="basic-addon2">g (ml)</span>
+                            </div>
                             <button type="submit" class="btn btn-success ms-3">Edit</button>
                         </div>
                     <div class="form-errors m-1"> {{ form_errors(editCarboForm.carbo) }} </div>
                 {{ form_end(editCarboForm) }}  
 
                 {{ form_start(editProteinForm) }}
-                    <div class="form-label m-1"> {{ form_label(editProteinForm.protein, 'Protein') }} </div>
+                    <div class="form-label"> {{ form_label(editProteinForm.protein, 'Protein') }} </div>
                         <div class="d-flex align-items-start">
-                            {{ form_widget(editProteinForm.protein, {'attr': {'class': 'form-control'}}) }}
+                            <div class="input-group mb-3">
+                                {{ form_widget(editProteinForm.protein, {'attr': {'class': 'form-control'}}) }}
+                                <span class="input-group-text" id="basic-addon2">g (ml)</span>
+                            </div>
                             <button type="submit" class="btn btn-success ms-3">Edit</button>
                         </div>
                     <div class="form-errors"> {{ form_errors(editProteinForm.protein) }} </div>
