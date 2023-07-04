@@ -6,6 +6,7 @@
     
         <div class="container d-flex justify-content-center pt-5">
             <div class="registration flex-fill">
+            <div class="col-lg bg-light m-2 p-5 content">
                 <h1>Login</h1>
                 {% if error %}
                     <small class="text-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</small>
@@ -20,6 +21,6 @@
                 </form>
             </div>
             </div>
+            </div>
      
-
 {% endblock %}

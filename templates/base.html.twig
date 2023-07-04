@@ -25,7 +25,7 @@
                                 <div class="navbar-nav">
                                     <a class="nav-link main-menu" href="{{ path('index') }}">Home</a>
                                     {% if is_granted('ROLE_USER') %}
-                                        <a class="nav-link main-menu" href="#">Diary</a>
+                                        <a class="nav-link main-menu" href="{{ path('diary') }}">Diary</a>
                                         <a class="nav-link main-menu" href="{{ path('products') }}">Product list</a>
                                     {% endif %}
                                     <a class="nav-link main-menu" href="#">About</a>

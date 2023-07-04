@@ -46,7 +46,7 @@ div.bar {
     border-bottom: 1px solid #d3d3d3;
 }
 div.registration {
-    max-width: 400px;
+    max-width: 600px;
 }
 div.add-product, div.content-table {
     max-width: 600px;
@@ -66,9 +66,9 @@ div.subheader {
     font-size: 13px;
     text-transform: uppercase;
 }
-input.form-control, span.input-group-text {
+.form-control, span.input-group-text {
     border-radius: 0px;
-    border: 1px solid #a7a7a7;
+    border: 1px solid #c0c0c0;
     color: #666666;
 }
 h1 {

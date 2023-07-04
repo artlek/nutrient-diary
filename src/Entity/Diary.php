@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\DiaryRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: DiaryRepository::class)]
@@ -14,7 +15,7 @@ class Diary
     private ?int $id = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $date = null;
+    private ?\DateTimeImmutable $datetime = null;
 
     #[ORM\ManyToOne(inversedBy: 'diaries')]
     #[ORM\JoinColumn(nullable: false)]
@@ -27,6 +28,11 @@ class Diary
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $date = null;
+
+    private array $nutrientContent = [];
+
     public function getId(): ?int
     {
         return $this->id;
@@ -37,9 +43,9 @@ class Diary
         return $this->date;
     }
 
-    public function setDate(\DateTimeImmutable $date): static
+    public function setDatetime(\DateTimeImmutable $datetime): static
     {
-        $this->date = $date;
+        $this->datetime = $datetime;
 
         return $this;
     }
@@ -79,4 +85,24 @@ class Diary
 
         return $this;
     }
+
+    public function setDate(string $date): static
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    public function getNutrientContent(): array
+    {
+        return $this->nutrientContent;
+    }
+
+    public function setNutrientContent(array $nutrientContent): static
+    {
+        $this->nutrientContent = $nutrientContent;
+
+        return $this;
+    }
+    
 }

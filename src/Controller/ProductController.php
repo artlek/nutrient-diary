@@ -5,7 +5,6 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Service\GetProductList;
 use App\Form\AddProductFormType;
 use App\Form\EditFatFormType;
 use App\Form\EditCarboFormType;
@@ -19,6 +18,9 @@ use App\Service\CheckIfProductExist;
 use App\Service\ProcessEditFatForm;
 use App\Service\ProcessEditCarboForm;
 use App\Service\ProcessEditProteinForm;
+use App\Service\DeleteProductFromDiary;
+use App\Service\DeleteProduct;
+use App\Service\GetProductList;
 
 class ProductController extends AbstractController
 {
@@ -64,7 +66,11 @@ class ProductController extends AbstractController
     public function showProduct($id, Request $request, EntityManagerInterface $em, ProcessEditFatForm $fatForm, ProcessEditCarboForm $carboForm, ProcessEditProteinForm $proteinForm): Response
     {   
         $this->denyAccessUnlessGranted('ROLE_USER');
-        $product = $em->getRepository(Product::class)->findOneBy(['id' => $id]);
+        $product = $em->getRepository(Product::class)->findOneBy([
+            'id' => $id, 
+            'isDeleted' => false,
+            'user' => $this->getUser()
+        ]);
         if($product){
             $product
                 ->setFat($product->getHasNutrients()->get(0)->getQuantity())
@@ -74,7 +80,6 @@ class ProductController extends AbstractController
             $editFatForm = $this->createForm(EditFatFormType::class)->handleRequest($request);
             $editCarboForm = $this->createForm(EditCarboFormType::class)->handleRequest($request);
             $editProteinForm = $this->createForm(EditProteinFormType::class)->handleRequest($request);
-
             if($fatForm->process($editFatForm, $product)){
                 $this->addFlash(
                     'positive',
@@ -82,7 +87,6 @@ class ProductController extends AbstractController
                 );
                 return $this->redirect($id);
             }
-
             if($carboForm->process($editCarboForm, $product)){
                 $this->addFlash(
                     'positive',
@@ -90,7 +94,6 @@ class ProductController extends AbstractController
                 );
                 return $this->redirect($id);
             }
-
             if($proteinForm->process($editProteinForm, $product)){
                 $this->addFlash(
                     'positive',
@@ -98,7 +101,6 @@ class ProductController extends AbstractController
                 );
                 return $this->redirect($id);
             }
-            
             return $this->render('product.html.twig', [
                 'product' => $product,
                 'editFatForm' => $editFatForm,
@@ -113,5 +115,42 @@ class ProductController extends AbstractController
             );
             return $this->redirectToRoute('products');
         }
+    }
+
+    #[Route('/delete-product-from-diary', name: 'delete-product-from-diary')]
+    public function deleteProductFromDiary(DeleteProductFromDiary $delete): Response
+    {   
+        $this->denyAccessUnlessGranted('ROLE_USER');
+        if(isset($_POST['delete-product'])){
+            if($delete->delete($_POST['delete-product'])){
+                $this->addFlash(
+                    'positive',
+                    'Product was deleted from diary'
+                );
+            }
+            return $this->redirectToRoute('date', ['date' => $_POST['date']]);
+        }
+        else{
+            $this->addFlash(
+                'negative',
+                'Product not found'
+            );
+            return $this->redirectToRoute('diary');
+        }
+    }
+
+    #[Route('/delete-product', name: 'delete-product')]
+    public function deleteProduct(DeleteProduct $delete): Response
+    {   
+        $this->denyAccessUnlessGranted('ROLE_USER');
+        if(isset($_POST['productId'])){
+            if($delete->delete($_POST['productId'])){
+                $this->addFlash(
+                    'positive',
+                    'Product was deleted'
+                );
+            }
+        }
+        return $this->redirectToRoute('products');
     }
 }

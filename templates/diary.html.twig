@@ -2,65 +2,92 @@
 
 {% block title %}
 
-   
+    {{ date }} - Nutrient DIary
 
 {% endblock %}
 
 {% block body %}
 
-
-    <div class="row">
-        <div class="col-lg-7 bg-light m-2 p-5 content">
-            <h1>2023-05-03</h2>
-                <div class="table-responsive">
-                    <table class="table mt-2">
-                        <thead>
-                            <tr>
-                            <th scope="col"></th>
-                            <th scope="col">product</th>
-                            <th scope="col">qty [g/ml]</th>
-                            <th scope="col">fat [g/ml]</th>
-                            <th scope="col">carbo [g/ml]</th>
-                            <th scope="col">protein [g/ml]</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Chicken chi cken</td>
-                                <td>150</td>
-                                <td>5.2</td>
-                                <td>19</td>
-                                <td>20.2</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Bread</td>
-                                <td>80</td>
-                                <td>3</td>
-                                <td>5</td>
-                                <td>6.1</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Milk</td>
-                                <td>200</td>
-                                <td>3.2</td>
-                                <td>5.5</td>
-                                <td>6</td>
-                            </tr>
-                        </tbody>
-                        <caption>Nutrient consumption for the day</caption>
-                    </table>
+    <div class="col-lg-4 my-3">
+        {{ form_start(dateForm) }}
+            <div class="form-label"> {{ form_label(dateForm.date, 'Choose a day') }} </div>
+                <div class="d-flex align-items-start">                   
+                    {{ form_widget(dateForm.date, {'attr': {'class': 'form-control'}}) }}
+                    <button type="submit" class="btn btn-success ms-3">Choose</button>
                 </div>
+            <div class="form-errors m-1"> {{ form_errors(dateForm.date) }} </div>
+        {{ form_end(dateForm) }}  
+    </div>
+    <div class="row">
+        <div class="col-lg bg-light m-2 p-5 content">
+            <h1 class="d-inline-flex">{{ date }}</h1>
+            {% if "now"|date("Y-m-d") == date %}
+                <h2 class="align-top d-inline-flex"><span class="mx-3 badge bg-warning">today</span></h2>
+            {% endif %}
+            {% if diaries is empty %}
+                <div class="mt-4">No products</div>
+            {% else %}
+                <table class="table mt-5">
+                    <tbody>
+                        <tr>
+                            <th></th>
+                            <th>product name</th>
+                            <th>quantity</th>
+                            <th>fat</th>
+                            <th>carbo</th>
+                            <th>protein</th>
+                            <th></th>
+                        </tr>
+                        {% set counter = 1 %}
+                        {% for product in diaries %}
+                        <tr>
+                            <td>{{ counter }}.</td>
+                            <td>{{ product.product.name }}</td>
+                            <td>{{ product.quantity }}</td>
+                            <td>{{ product.nutrientContent.fat }}</td>
+                            <td>{{ product.nutrientContent.carbo }}</td>
+                            <td>{{ product.nutrientContent.protein }}</td>
+                            <td>
+                                <form action="{{ path('delete-product-from-diary') }} " method="POST">
+                                    <input type="hidden" name="delete-product" value="{{ product.id }}">
+                                    <input type="hidden" name="date" value="{{ date }}">
+                                    <button type="submit" class="btn btn-danger btn-sm">delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% set counter = counter + 1 %}
+                        {% endfor %}
+                    </tbody>
+                    <caption>Nutrient content [g]</caption>
+                </table>
+            {% endif %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg bg-light m-2 p-5 content">
+            <h1>Add product to diary</h1>
+            {{ form_start(chooseProductForm) }}
+            <div class="row align-items-start">
+                <div class="col-md-6">
+                    <div class="form-label">{{ form_label(chooseProductForm.productId, 'choose a product') }} </div>           
+                    {{ form_widget(chooseProductForm.productId, {'attr': {'class': 'form-control'}}) }}
+                <div class="form-errors m-1"> {{ form_errors(chooseProductForm.productId) }} </div>
             </div>
+            <div class="col-md-6">
+                <div class="form-label"> {{ form_label(chooseProductForm.quantity, 'quantity (g/ml)') }} </div>                
+                    {{ form_widget(chooseProductForm.quantity, {'attr': {'class': 'form-control'}}) }}
+                <div class="form-errors m-1"> {{ form_errors(chooseProductForm.quantity) }} </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-success px-4 my-1">Add</button>
+        {{ form_end(chooseProductForm) }}      
+    </div>
     <div class="col-lg bg-light m-2 p-5 content">
         <h1>Targets</h1>
-
         No target set
-       
+        </div>
     </div>
-          
+
 {% endblock %}
 
 
