@@ -27,7 +27,7 @@
             {% if diaries is empty %}
                 <div class="mt-4">No products</div>
             {% else %}
-                <table class="table mt-5">
+                <table class="table my-5">
                     <tbody>
                         <tr>
                             <th></th>
@@ -58,6 +58,15 @@
                         {% set counter = counter + 1 %}
                         {% endfor %}
                     </tbody>
+                    <tfoot>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>{{ nutrientConsumption.fat }}</td>
+                        <td>{{ nutrientConsumption.carbo }}</td>
+                        <td>{{ nutrientConsumption.protein }}</td>
+                        <td></td>
+                    </tfoot>
                     <caption>Nutrient content [g]</caption>
                 </table>
             {% endif %}
@@ -71,20 +80,89 @@
                 <div class="col-md-6">
                     <div class="form-label">{{ form_label(chooseProductForm.productId, 'choose a product') }} </div>           
                     {{ form_widget(chooseProductForm.productId, {'attr': {'class': 'form-control'}}) }}
-                <div class="form-errors m-1"> {{ form_errors(chooseProductForm.productId) }} </div>
+                    <div class="form-errors m-1"> {{ form_errors(chooseProductForm.productId) }} </div>
+                </div>
+                    <div class="col-md-6">
+                    <div class="form-label"> {{ form_label(chooseProductForm.quantity, 'quantity (g/ml)') }} </div>                
+                        {{ form_widget(chooseProductForm.quantity, {'attr': {'class': 'form-control'}}) }}
+                    <div class="form-errors m-1"> {{ form_errors(chooseProductForm.quantity) }} </div>
+                </div>
             </div>
-            <div class="col-md-6">
-                <div class="form-label"> {{ form_label(chooseProductForm.quantity, 'quantity (g/ml)') }} </div>                
-                    {{ form_widget(chooseProductForm.quantity, {'attr': {'class': 'form-control'}}) }}
-                <div class="form-errors m-1"> {{ form_errors(chooseProductForm.quantity) }} </div>
-            </div>
-        </div>
-        <button type="submit" class="btn btn-success px-4 my-1">Add</button>
+            <button type="submit" class="btn btn-success px-4 my-1">Add</button>
         {{ form_end(chooseProductForm) }}      
+        </div>
     </div>
-    <div class="col-lg bg-light m-2 p-5 content">
-        <h1>Targets</h1>
-        No target set
+    <div class="row">
+        <div class="col-lg bg-light m-2 p-5 content">
+            <h1>Targets</h1>
+            <table class="table my-4">
+                    <tbody>
+                        <tr>
+                            <th></th>
+                            <th>nutrient</th>
+                            <th>target</th>
+                            <th>consumed</th>
+                        </tr>
+                        <tr>
+                            <td>1.</td>
+                            <td>fat</td>
+                            <td>{{ nutrientTarget.fat }}</td>
+                            <td>{{ nutrientConsumption.fat }}</td>
+                        </tr>
+                                            <tr>
+                            <td>2.</td>
+                            <td>carbo</td>
+                            <td>{{ nutrientTarget.carbo }}</td>
+                            <td>{{ nutrientConsumption.carbo }}</td>
+                        </tr>
+                        <tr>
+                            <td>3.</td>
+                            <td>protein</td>
+                            <td>{{ nutrientTarget.protein }}</td>
+                            <td>{{ nutrientConsumption.protein }}</td>
+                        </tr>
+                        <caption>Daily nutrient targets [g]</caption>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-lg bg-light m-2 p-5 content">
+           <h1>Edit nutrient targets</h1>
+                {{ form_start(editFatTargetForm) }}
+                    <div class="form-label"> {{ form_label(editFatTargetForm.fat, 'Fat') }} </div>
+                    <div class="d-flex align-items-start">
+                        <div class="input-group">
+                            {{ form_widget(editFatTargetForm.fat, {'attr': {'class': 'form-control'}}) }}
+                            <span class="input-group-text" id="basic-addon2">g</span>
+                        </div>
+                        <button type="submit" class="btn btn-success ms-3">Save</button>
+                    </div>
+                    <div class="form-errors m-1"> {{ form_errors(editFatTargetForm.fat) }} </div>
+                {{ form_end(editFatTargetForm) }}
+
+                {{ form_start(editCarboTargetForm) }}
+                    <div class="form-label"> {{ form_label(editCarboTargetForm.carbo, 'Carbo') }} </div>
+                    <div class="d-flex align-items-start">
+                        <div class="input-group">
+                            {{ form_widget(editCarboTargetForm.carbo, {'attr': {'class': 'form-control'}}) }}
+                            <span class="input-group-text" id="basic-addon2">g</span>
+                        </div>
+                        <button type="submit" class="btn btn-success ms-3">Save</button>
+                    </div>
+                    <div class="form-errors m-1"> {{ form_errors(editCarboTargetForm.carbo) }} </div>
+                {{ form_end(editCarboTargetForm) }}
+
+                {{ form_start(editProteinTargetForm) }}
+                    <div class="form-label"> {{ form_label(editProteinTargetForm.protein, 'Protein') }} </div>
+                    <div class="d-flex align-items-start">
+                        <div class="input-group">
+                            {{ form_widget(editProteinTargetForm.protein, {'attr': {'class': 'form-control'}}) }}
+                            <span class="input-group-text" id="basic-addon2">g</span>
+                        </div>
+                        <button type="submit" class="btn btn-success ms-3">Save</button>
+                    </div>
+                    <div class="form-errors m-1"> {{ form_errors(editProteinTargetForm.protein) }} </div>
+                {{ form_end(editProteinTargetForm) }}
+           
         </div>
     </div>
 
