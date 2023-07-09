@@ -25,7 +25,7 @@
                 <h2 class="align-top d-inline-flex"><span class="mx-3 badge bg-warning">today</span></h2>
             {% endif %}
             {% if diaries is empty %}
-                <div class="mt-4">No products</div>
+                <div class="mt-4">No product</div>
             {% else %}
                 <table class="table my-5">
                     <tbody>
@@ -91,78 +91,86 @@
             <button type="submit" class="btn btn-success px-4 my-1">Add</button>
         {{ form_end(chooseProductForm) }}      
         </div>
-    </div>
-    <div class="row">
         <div class="col-lg bg-light m-2 p-5 content">
             <h1>Targets</h1>
             <table class="table my-4">
-                    <tbody>
-                        <tr>
-                            <th></th>
-                            <th>nutrient</th>
-                            <th>target</th>
-                            <th>consumed</th>
-                        </tr>
-                        <tr>
-                            <td>1.</td>
-                            <td>fat</td>
-                            <td>{{ nutrientTarget.fat }}</td>
-                            <td>{{ nutrientConsumption.fat }}</td>
-                        </tr>
-                                            <tr>
-                            <td>2.</td>
-                            <td>carbo</td>
-                            <td>{{ nutrientTarget.carbo }}</td>
-                            <td>{{ nutrientConsumption.carbo }}</td>
-                        </tr>
-                        <tr>
-                            <td>3.</td>
-                            <td>protein</td>
-                            <td>{{ nutrientTarget.protein }}</td>
-                            <td>{{ nutrientConsumption.protein }}</td>
-                        </tr>
-                        <caption>Daily nutrient targets [g]</caption>
-                    </tbody>
-                </table>
+                <tbody>
+                    <tr>
+                        <th></th>
+                        <th>nutrient</th>
+                        <th>target</th>
+                        <th>consumed</th>
+                    </tr>
+                    <tr>
+                        <td>1.</td>
+                        <td>fat</td>
+                        <td>{{ nutrientTarget.fat }}</td>
+                        <td>{{ nutrientConsumption.fat }}</td>
+                    </tr>
+                    <tr>
+                        <td>2.</td>
+                        <td>carbo</td>
+                        <td>{{ nutrientTarget.carbo }}</td>
+                        <td>{{ nutrientConsumption.carbo }}</td>
+                    </tr>
+                    <tr>
+                        <td>3.</td>
+                        <td>protein</td>
+                        <td>{{ nutrientTarget.protein }}</td>
+                        <td>{{ nutrientConsumption.protein }}</td>
+                    </tr>
+                    <caption>Daily nutrient targets [g]</caption>
+                </tbody>
+            </table>
+            <button type="button" class="btn btn-primary px-4" data-bs-toggle="modal" data-bs-target="#exampleModal">Edit targets</button>
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content bg-light">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Edit nutrient targets</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            {{ form_start(editFatTargetForm) }}
+                                <div class="form-label"> {{ form_label(editFatTargetForm.fat, 'Fat') }} </div>
+                                <div class="d-flex align-items-start">
+                                    <div class="input-group">
+                                        {{ form_widget(editFatTargetForm.fat, {'attr': {'class': 'form-control'}}) }}
+                                        <span class="input-group-text" id="basic-addon2">g</span>
+                                    </div>
+                                    <button type="submit" class="btn btn-success ms-3">Save</button>
+                                </div>
+                                <div class="form-errors m-1"> {{ form_errors(editFatTargetForm.fat) }} </div>
+                            {{ form_end(editFatTargetForm) }}
+                            {{ form_start(editCarboTargetForm) }}
+                                <div class="form-label"> {{ form_label(editCarboTargetForm.carbo, 'Carbo') }} </div>
+                                <div class="d-flex align-items-start">
+                                    <div class="input-group">
+                                        {{ form_widget(editCarboTargetForm.carbo, {'attr': {'class': 'form-control'}}) }}
+                                        <span class="input-group-text" id="basic-addon2">g</span>
+                                    </div>
+                                    <button type="submit" class="btn btn-success ms-3">Save</button>
+                                </div>
+                                <div class="form-errors m-1"> {{ form_errors(editCarboTargetForm.carbo) }} </div>
+                            {{ form_end(editCarboTargetForm) }}
+                            {{ form_start(editProteinTargetForm) }}
+                                <div class="form-label"> {{ form_label(editProteinTargetForm.protein, 'Protein') }} </div>
+                                <div class="d-flex align-items-start">
+                                    <div class="input-group">
+                                        {{ form_widget(editProteinTargetForm.protein, {'attr': {'class': 'form-control'}}) }}
+                                        <span class="input-group-text" id="basic-addon2">g</span>
+                                    </div>
+                                    <button type="submit" class="btn btn-success ms-3">Save</button>
+                                </div>
+                                <div class="form-errors m-1"> {{ form_errors(editProteinTargetForm.protein) }} </div>
+                            {{ form_end(editProteinTargetForm) }}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="col-lg bg-light m-2 p-5 content">
-           <h1>Edit nutrient targets</h1>
-                {{ form_start(editFatTargetForm) }}
-                    <div class="form-label"> {{ form_label(editFatTargetForm.fat, 'Fat') }} </div>
-                    <div class="d-flex align-items-start">
-                        <div class="input-group">
-                            {{ form_widget(editFatTargetForm.fat, {'attr': {'class': 'form-control'}}) }}
-                            <span class="input-group-text" id="basic-addon2">g</span>
-                        </div>
-                        <button type="submit" class="btn btn-success ms-3">Save</button>
-                    </div>
-                    <div class="form-errors m-1"> {{ form_errors(editFatTargetForm.fat) }} </div>
-                {{ form_end(editFatTargetForm) }}
-
-                {{ form_start(editCarboTargetForm) }}
-                    <div class="form-label"> {{ form_label(editCarboTargetForm.carbo, 'Carbo') }} </div>
-                    <div class="d-flex align-items-start">
-                        <div class="input-group">
-                            {{ form_widget(editCarboTargetForm.carbo, {'attr': {'class': 'form-control'}}) }}
-                            <span class="input-group-text" id="basic-addon2">g</span>
-                        </div>
-                        <button type="submit" class="btn btn-success ms-3">Save</button>
-                    </div>
-                    <div class="form-errors m-1"> {{ form_errors(editCarboTargetForm.carbo) }} </div>
-                {{ form_end(editCarboTargetForm) }}
-
-                {{ form_start(editProteinTargetForm) }}
-                    <div class="form-label"> {{ form_label(editProteinTargetForm.protein, 'Protein') }} </div>
-                    <div class="d-flex align-items-start">
-                        <div class="input-group">
-                            {{ form_widget(editProteinTargetForm.protein, {'attr': {'class': 'form-control'}}) }}
-                            <span class="input-group-text" id="basic-addon2">g</span>
-                        </div>
-                        <button type="submit" class="btn btn-success ms-3">Save</button>
-                    </div>
-                    <div class="form-errors m-1"> {{ form_errors(editProteinTargetForm.protein) }} </div>
-                {{ form_end(editProteinTargetForm) }}
-           
         </div>
     </div>
 
