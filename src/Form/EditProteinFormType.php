@@ -13,7 +13,7 @@ class EditProteinFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        ->add('protein', NumberType::class, ['attr' => ['minlength' => 1]])
+            ->add('protein', NumberType::class, ['attr' => ['minlength' => 1]])
         ;
     }
 

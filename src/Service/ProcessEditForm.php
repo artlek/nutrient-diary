@@ -17,7 +17,6 @@ class ProcessEditForm
 
     public function __construct(private EntityManagerInterface $em, private SaveToDatabase $save)
     {
-       
     }
 
     public function process(Form $form, Product $product) : bool

@@ -13,7 +13,6 @@ class EditNutrientTarget
 {
     public function __construct(private EntityManagerInterface $em, private SaveToDatabase $save)
     {
-
     }
 
     # Adds or edits nutrient targets

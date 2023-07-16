@@ -13,7 +13,7 @@ class EditCarboFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        ->add('carbo', NumberType::class, ['attr' => ['minlength' => 1]])
+            ->add('carbo', NumberType::class, ['attr' => ['minlength' => 1]])
         ;
     }
 

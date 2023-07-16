@@ -13,7 +13,7 @@ class EditFatTargetFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        ->add('fat', NumberType::class, ['attr' => ['minlength' => 1]])
+            ->add('fat', NumberType::class, ['attr' => ['minlength' => 1]])
         ;
     }
 
