@@ -22,14 +22,16 @@ use App\Service\Target\ProteinTarget;
 use App\Service\Target\EditFatTarget;
 use App\Service\Target\EditCarboTarget;
 use App\Service\Target\EditProteinTarget;
+use App\Service\DailyConsumption\DailyFatConsumption;
+use App\Service\DailyConsumption\DailyCarboConsumption;
+use App\Service\DailyConsumption\DailyProteinConsumption;
+use App\Service\CheckIfAnyProductExist;
 use App\Service\ValidateDate;
 use App\Service\SaveToDatabase;
 use App\Service\SetNutrientsToDiary;
 use App\Service\ValidateQuantity;
 use App\Service\EditNutrientTarget;
-use App\Service\DailyConsumption\DailyFatConsumption;
-use App\Service\DailyConsumption\DailyCarboConsumption;
-use App\Service\DailyConsumption\DailyProteinConsumption;
+
 use Doctrine\ORM\EntityManagerInterface;
 use DateTimeImmutable;
 
@@ -43,7 +45,7 @@ class DiaryController extends AbstractController
     }
 
     #[Route('/date/{date}', name: 'date')]
-    public function showDay($date, Request $request, EditFatTarget $editFatTarget, EditCarboTarget $editCarboTarget, EditProteinTarget $editProteinTarget, SetNutrientsToDiary $setNutrients, FatTarget $fatTarget, CarboTarget $carboTarget, ProteinTarget $proteinTarget, ValidateDate $validateDate, ValidateQuantity $validate, EntityManagerInterface $em, SaveToDatabase $save, DailyFatConsumption $fatConsumption, DailyCarboConsumption $carboConsumption, DailyProteinConsumption $proteinConsumption): Response
+    public function showDay($date, Request $request, EditFatTarget $editFatTarget, EditCarboTarget $editCarboTarget, EditProteinTarget $editProteinTarget, SetNutrientsToDiary $setNutrients, FatTarget $fatTarget, CarboTarget $carboTarget, ProteinTarget $proteinTarget, ValidateDate $validateDate, ValidateQuantity $validate, EntityManagerInterface $em, SaveToDatabase $save, DailyFatConsumption $fatConsumption, DailyCarboConsumption $carboConsumption, DailyProteinConsumption $proteinConsumption, CheckIfAnyProductExist $anyProductExist): Response
     {   
         $this->denyAccessUnlessGranted('ROLE_USER');
         $diary = new Diary();
@@ -104,25 +106,31 @@ class DiaryController extends AbstractController
                     return $this->redirectToRoute('date', ['date' => $date]);
                 }
             }
-            if($chooseProductForm->isSubmitted() && $chooseProductForm->isValid()) {
-                if($validate->validate($chooseProductForm->get('quantity')->getData())){
-                    $diary = new Diary();
-                    $diary
-                        ->setProduct($em->getRepository(Product::class)->findOneBy(['id' => $chooseProductForm->get('productId')->GetData()]))
-                        ->setUser($this->getUser())
-                        ->setDate($date)
-                        ->setDatetime(new DateTimeImmutable())
-                        ->setQuantity(round($chooseProductForm->get('quantity')->getData(), 2))
-                    ;
-                    $save->save($diary);
+            if($anyProductExist->check($this->getUser()) == TRUE){
+                $products = TRUE;
+                if($chooseProductForm->isSubmitted() && $chooseProductForm->isValid()) {
+                    if($validate->validate($chooseProductForm->get('quantity')->getData())){
+                        $diary = new Diary();
+                        $diary
+                            ->setProduct($em->getRepository(Product::class)->findOneBy(['id' => $chooseProductForm->get('productId')->GetData()]))
+                            ->setUser($this->getUser())
+                            ->setDate($date)
+                            ->setDatetime(new DateTimeImmutable())
+                            ->setQuantity(round($chooseProductForm->get('quantity')->getData(), 2))
+                        ;
+                        $save->save($diary);
+                    }
+                    else{
+                        $this->addFlash(
+                            'negative',
+                            'Invalid product quantity'
+                        );
+                    }
+                    return $this->redirectToRoute('date', ['date' => $date]);
                 }
-                else{
-                    $this->addFlash(
-                        'negative',
-                        'Invalid product quantity'
-                    );
-                }
-                return $this->redirectToRoute('date', ['date' => $date]);
+            }
+            else {
+                $products = FALSE;
             }
             return $this->render('diary.html.twig', [
                 'dateForm' => $dateForm,
@@ -134,6 +142,7 @@ class DiaryController extends AbstractController
                 'editFatTargetForm' => $editFatTargetForm,
                 'editCarboTargetForm' => $editCarboTargetForm,
                 'editProteinTargetForm' => $editProteinTargetForm,
+                'products' => $products,
             ]);
         }
         else{

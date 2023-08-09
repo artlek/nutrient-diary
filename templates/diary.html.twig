@@ -75,21 +75,27 @@
     <div class="row">
         <div class="col-lg bg-light m-2 p-5 content">
             <h1>Add product to diary</h1>
-            {{ form_start(chooseProductForm) }}
-            <div class="row align-items-start">
-                <div class="col-md-6">
-                    <div class="form-label">{{ form_label(chooseProductForm.productId, 'choose a product') }} </div>           
-                    {{ form_widget(chooseProductForm.productId, {'attr': {'class': 'form-control'}}) }}
-                    <div class="form-errors m-1"> {{ form_errors(chooseProductForm.productId) }} </div>
-                </div>
+            {% if products == TRUE %}
+                {{ form_start(chooseProductForm) }}
+                <div class="row align-items-start">
                     <div class="col-md-6">
-                    <div class="form-label"> {{ form_label(chooseProductForm.quantity, 'quantity (g/ml)') }} </div>                
-                        {{ form_widget(chooseProductForm.quantity, {'attr': {'class': 'form-control'}}) }}
-                    <div class="form-errors m-1"> {{ form_errors(chooseProductForm.quantity) }} </div>
+                        <div class="form-label">{{ form_label(chooseProductForm.productId, 'choose a product') }} </div>           
+                        {{ form_widget(chooseProductForm.productId, {'attr': {'class': 'form-control'}}) }}
+                        <div class="form-errors m-1"> {{ form_errors(chooseProductForm.productId) }} </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-label"> {{ form_label(chooseProductForm.quantity, 'quantity (g/ml)') }} </div>                
+                            {{ form_widget(chooseProductForm.quantity, {'attr': {'class': 'form-control'}}) }}
+                        <div class="form-errors m-1"> {{ form_errors(chooseProductForm.quantity) }} </div>
+                    </div>
                 </div>
-            </div>
-            <button type="submit" class="btn btn-success px-4 my-1">Add</button>
-        {{ form_end(chooseProductForm) }}      
+                <button type="submit" class="btn btn-success px-4 my-1">Add</button>
+                {{ form_end(chooseProductForm) }}
+            {% else %}
+                <div class="alert bg-light">
+                    There is no product. Add product in <a class="link" href="{{ path('add-product') }}">product list</a> before.
+                </div>
+            {% endif %}
         </div>
         <div class="col-lg bg-light m-2 p-5 content">
             <h1>Targets</h1>
