@@ -8,9 +8,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class IndexController extends AbstractController
 {
+    private string $version = '1.0.0';
+
     #[Route('/', name: 'index')]
     public function index(): Response
     {
-        return $this->render('index.html.twig');
+        return $this->render('index.html.twig', [
+            'version' => $this->version
+        ]);
     }
 }
