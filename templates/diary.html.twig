@@ -27,48 +27,53 @@
             {% if diaries is empty %}
                 <div class="mt-4">No product</div>
             {% else %}
-                <table class="table my-5">
-                    <tbody>
-                        <tr>
-                            <th></th>
-                            <th>product name</th>
-                            <th>quantity</th>
-                            <th>fat</th>
-                            <th>carbo</th>
-                            <th>protein</th>
-                            <th></th>
-                        </tr>
-                        {% set counter = 1 %}
-                        {% for product in diaries %}
-                        <tr>
-                            <td>{{ counter }}.</td>
-                            <td>{{ product.product.name }}</td>
-                            <td>{{ product.quantity }}</td>
-                            <td>{{ product.nutrientContent.fat }}</td>
-                            <td>{{ product.nutrientContent.carbo }}</td>
-                            <td>{{ product.nutrientContent.protein }}</td>
-                            <td>
-                                <form action="{{ path('delete-product-from-diary') }} " method="POST">
-                                    <input type="hidden" name="delete-product" value="{{ product.id }}">
-                                    <input type="hidden" name="date" value="{{ date }}">
-                                    <button type="submit" class="btn btn-danger btn-sm">delete</button>
-                                </form>
-                            </td>
-                        </tr>
-                        {% set counter = counter + 1 %}
-                        {% endfor %}
-                    </tbody>
-                    <tfoot>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>{{ nutrientConsumption.fat }}</td>
-                        <td>{{ nutrientConsumption.carbo }}</td>
-                        <td>{{ nutrientConsumption.protein }}</td>
-                        <td></td>
-                    </tfoot>
-                    <caption>Nutrient content [g]</caption>
-                </table>
+                <div class="table-responsive">
+                    <table class="table my-5">
+                        <tbody>
+                            <tr>
+                                <th></th>
+                                <th>product name</th>
+                                <th>quantity</th>
+                                <th>fat</th>
+                                <th>carbo</th>
+                                <th>protein</th>
+                                <th>kcal</th>
+                                <th></th>
+                            </tr>
+                            {% set counter = 1 %}
+                            {% for product in diaries %}
+                            <tr>
+                                <td>{{ counter }}.</td>
+                                <td>{{ product.product.name }}</td>
+                                <td>{{ product.quantity }}</td>
+                                <td>{{ product.nutrientContent.fat }}</td>
+                                <td>{{ product.nutrientContent.carbo }}</td>
+                                <td>{{ product.nutrientContent.protein }}</td>
+                                <td>{{ product.nutrientContent.kcal }}</td>
+                                <td>
+                                    <form action="{{ path('delete-product-from-diary') }} " method="POST">
+                                        <input type="hidden" name="delete-product" value="{{ product.id }}">
+                                        <input type="hidden" name="date" value="{{ date }}">
+                                        <button type="submit" class="btn btn-danger btn-sm">delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% set counter = counter + 1 %}
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>{{ nutrientConsumption.fat }}</td>
+                            <td>{{ nutrientConsumption.carbo }}</td>
+                            <td>{{ nutrientConsumption.protein }}</td>
+                            <td>{{ nutrientConsumption.kcal }}</td>
+                            <td></td>
+                        </tfoot>
+                        <caption>Nutrient content [g]</caption>
+                    </table>
+                </div>
             {% endif %}
         </div>
     </div>
@@ -125,6 +130,12 @@
                         <td>{{ nutrientTarget.protein }}</td>
                         <td>{{ nutrientConsumption.protein }}</td>
                     </tr>
+                    <tr>
+                        <td>4.</td>
+                        <td>kcal</td>
+                        <td>{{ nutrientTarget.kcal }}</td>
+                        <td>{{ nutrientConsumption.kcal }}</td>
+                    </tr>
                     <caption>Daily nutrient targets [g]</caption>
                 </tbody>
             </table>
@@ -170,6 +181,17 @@
                                 </div>
                                 <div class="form-errors m-1"> {{ form_errors(editProteinTargetForm.protein) }} </div>
                             {{ form_end(editProteinTargetForm) }}
+                            {{ form_start(editKcalTargetForm) }}
+                                <div class="form-label"> {{ form_label(editKcalTargetForm.kcal, 'Kcal') }} </div>
+                                <div class="d-flex align-items-start">
+                                    <div class="input-group">
+                                        {{ form_widget(editKcalTargetForm.kcal, {'attr': {'class': 'form-control'}}) }}
+                                        <span class="input-group-text" id="basic-addon2">kcal</span>
+                                    </div>
+                                    <button type="submit" class="btn btn-success ms-3">Save</button>
+                                </div>
+                                <div class="form-errors m-1"> {{ form_errors(editKcalTargetForm.kcal) }} </div>
+                            {{ form_end(editKcalTargetForm) }}
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal">Close</button>

@@ -22,6 +22,7 @@ class GetProductList
                 ->setFat($products[$i]->getHasNutrients()->get(0)->getQuantity())
                 ->setCarbo($products[$i]->getHasNutrients()->get(1)->getQuantity())
                 ->setProtein($products[$i]->getHasNutrients()->get(2)->getQuantity())
+                ->setKcal($products[$i]->getHasNutrients()->get(3)->getQuantity())
             ;
         }
         return $products;

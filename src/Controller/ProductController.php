@@ -9,6 +9,7 @@ use App\Form\AddProductFormType;
 use App\Form\EditFatFormType;
 use App\Form\EditCarboFormType;
 use App\Form\EditProteinFormType;
+use App\Form\EditKcalFormType;
 use App\Entity\Product;
 use App\Entity\ProductHasNutrients;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,6 +19,7 @@ use App\Service\CheckIfProductExist;
 use App\Service\ProcessEditFatForm;
 use App\Service\ProcessEditCarboForm;
 use App\Service\ProcessEditProteinForm;
+use App\Service\ProcessEditKcalForm;
 use App\Service\DeleteProductFromDiary;
 use App\Service\DeleteProduct;
 use App\Service\GetProductList;
@@ -39,7 +41,7 @@ class ProductController extends AbstractController
         $this->denyAccessUnlessGranted('ROLE_USER');
         $product = new Product();
         $form = $this->createForm(AddProductFormType::class, $product)->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid() && $form->get('name')->getData() !== null && $form->get('fat')->getData() !== null && $form->get('carbo')->getData() !== null && $form->get('protein')->getData() !== null){
+        if($form->isSubmitted() && $form->isValid() && $form->get('name')->getData() !== null && $form->get('fat')->getData() !== null && $form->get('carbo')->getData() !== null && $form->get('protein')->getData() !== null && $form->get('kcal')->getData() !== null){
             if($check->check($product->getName(), $this->getUser())){
                 $this->addFlash(
                     'negative',
@@ -63,7 +65,7 @@ class ProductController extends AbstractController
     }
 
     #[Route('/product/{id}', name: 'product')]
-    public function showProduct($id, Request $request, EntityManagerInterface $em, ProcessEditFatForm $fatForm, ProcessEditCarboForm $carboForm, ProcessEditProteinForm $proteinForm): Response
+    public function showProduct($id, Request $request, EntityManagerInterface $em, ProcessEditFatForm $fatForm, ProcessEditCarboForm $carboForm, ProcessEditProteinForm $proteinForm, ProcessEditKcalForm $kcalForm): Response
     {   
         $this->denyAccessUnlessGranted('ROLE_USER');
         $product = $em->getRepository(Product::class)->findOneBy([
@@ -76,10 +78,12 @@ class ProductController extends AbstractController
                 ->setFat($product->getHasNutrients()->get(0)->getQuantity())
                 ->setCarbo($product->getHasNutrients()->get(1)->getQuantity())
                 ->setProtein($product->getHasNutrients()->get(2)->getQuantity())
+                ->setKcal($product->getHasNutrients()->get(3)->getQuantity())
             ;
             $editFatForm = $this->createForm(EditFatFormType::class)->handleRequest($request);
             $editCarboForm = $this->createForm(EditCarboFormType::class)->handleRequest($request);
             $editProteinForm = $this->createForm(EditProteinFormType::class)->handleRequest($request);
+            $editKcalForm = $this->createForm(EditKcalFormType::class)->handleRequest($request);
             if($fatForm->process($editFatForm, $product)){
                 $this->addFlash(
                     'positive',
@@ -101,11 +105,19 @@ class ProductController extends AbstractController
                 );
                 return $this->redirect($id);
             }
+            if($kcalForm->process($editKcalForm, $product)){
+                $this->addFlash(
+                    'positive',
+                    'Product nutrient was edited'
+                );
+                return $this->redirect($id);
+            }
             return $this->render('product.html.twig', [
                 'product' => $product,
                 'editFatForm' => $editFatForm,
                 'editCarboForm' => $editCarboForm,
-                'editProteinForm' => $editProteinForm
+                'editProteinForm' => $editProteinForm,
+                'editKcalForm' => $editKcalForm
             ]);
         }
         else {

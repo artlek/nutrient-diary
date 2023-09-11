@@ -51,6 +51,14 @@ class AddProduct
         ;
         $this->save->save($productHasNutrients);
 
+        $productHasNutrients = new ProductHasNutrients();
+        $productHasNutrients
+            ->setProducts($product)
+            ->setNutrients($this->em->getRepository(Nutrient::class)->findOneBy(['name' => 'kcal']))
+            ->setQuantity($product->getKcal())
+        ;
+        $this->save->save($productHasNutrients);
+
         return true;
     }
 }

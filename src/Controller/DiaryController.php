@@ -11,6 +11,7 @@ use App\Form\ChooseProductFormType;
 use App\Form\EditFatTargetFormType;
 use App\Form\EditCarboTargetFormType;
 use App\Form\EditProteinTargetFormType;
+use App\Form\EditKcalTargetFormType;
 use App\Entity\Diary;
 use App\Entity\Product;
 use App\Entity\Nutrient;
@@ -18,13 +19,16 @@ use App\Entity\NutrientHasTarget;
 use App\Service\Target\Target;
 use App\Service\Target\FatTarget;
 use App\Service\Target\CarboTarget;
+use App\Service\Target\KcalTarget;
 use App\Service\Target\ProteinTarget;
 use App\Service\Target\EditFatTarget;
 use App\Service\Target\EditCarboTarget;
 use App\Service\Target\EditProteinTarget;
+use App\Service\Target\EditKcalTarget;
 use App\Service\DailyConsumption\DailyFatConsumption;
 use App\Service\DailyConsumption\DailyCarboConsumption;
 use App\Service\DailyConsumption\DailyProteinConsumption;
+use App\Service\DailyConsumption\DailyKcalConsumption;
 use App\Service\CheckIfAnyProductExist;
 use App\Service\ValidateDate;
 use App\Service\SaveToDatabase;
@@ -45,7 +49,7 @@ class DiaryController extends AbstractController
     }
 
     #[Route('/date/{date}', name: 'date')]
-    public function showDay($date, Request $request, EditFatTarget $editFatTarget, EditCarboTarget $editCarboTarget, EditProteinTarget $editProteinTarget, SetNutrientsToDiary $setNutrients, FatTarget $fatTarget, CarboTarget $carboTarget, ProteinTarget $proteinTarget, ValidateDate $validateDate, ValidateQuantity $validate, EntityManagerInterface $em, SaveToDatabase $save, DailyFatConsumption $fatConsumption, DailyCarboConsumption $carboConsumption, DailyProteinConsumption $proteinConsumption, CheckIfAnyProductExist $anyProductExist): Response
+    public function showDay($date, Request $request, EditFatTarget $editFatTarget, EditCarboTarget $editCarboTarget, EditProteinTarget $editProteinTarget, EditKcalTarget $editKcalTarget, SetNutrientsToDiary $setNutrients, FatTarget $fatTarget, CarboTarget $carboTarget, ProteinTarget $proteinTarget, KcalTarget $kcalTarget, ValidateDate $validateDate, ValidateQuantity $validate, EntityManagerInterface $em, SaveToDatabase $save, DailyFatConsumption $fatConsumption, DailyCarboConsumption $carboConsumption, DailyProteinConsumption $proteinConsumption, DailyKcalConsumption $kcalConsumption, CheckIfAnyProductExist $anyProductExist): Response
     {   
         $this->denyAccessUnlessGranted('ROLE_USER');
         $diary = new Diary();
@@ -63,12 +67,14 @@ class DiaryController extends AbstractController
             $nutrientTarget = [
                 'fat' => $fatTarget->get($this->getUser()),
                 'carbo' => $carboTarget->get($this->getUser()),
-                'protein' => $proteinTarget->get($this->getUser())
+                'protein' => $proteinTarget->get($this->getUser()),
+                'kcal' => $kcalTarget->get($this->getUser())
             ];
             $nutrientConsumption = [
                 'fat' => $fatConsumption->compute($date, $this->getUser()),
                 'carbo' => $carboConsumption->compute($date, $this->getUser()),
-                'protein' => $proteinConsumption->compute($date, $this->getUser())
+                'protein' => $proteinConsumption->compute($date, $this->getUser()),
+                'kcal' => $kcalConsumption->compute($date, $this->getUser())
             ];
             if($diaries){
                 $diaries = $setNutrients->set($diaries);
@@ -102,6 +108,17 @@ class DiaryController extends AbstractController
                     $this->addFlash(
                         'positive',
                         'Protein targets have been saved'
+                    );
+                    return $this->redirectToRoute('date', ['date' => $date]);
+                }
+            }
+            $editKcalTargetForm = $this->createForm(EditKcalTargetFormType::class);
+            $editKcalTargetForm->handleRequest($request);
+            if($editKcalTargetForm->isSubmitted() && $editKcalTargetForm->isValid()){
+                if($validate->validate($editKcalTargetForm->get('kcal')->getData()) AND $editKcalTarget->edit($editKcalTargetForm, $this->getUser())){
+                    $this->addFlash(
+                        'positive',
+                        'Kcal targets have been saved'
                     );
                     return $this->redirectToRoute('date', ['date' => $date]);
                 }
@@ -142,6 +159,7 @@ class DiaryController extends AbstractController
                 'editFatTargetForm' => $editFatTargetForm,
                 'editCarboTargetForm' => $editCarboTargetForm,
                 'editProteinTargetForm' => $editProteinTargetForm,
+                'editKcalTargetForm' => $editKcalTargetForm,
                 'products' => $products,
             ]);
         }

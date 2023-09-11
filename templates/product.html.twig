@@ -34,6 +34,10 @@
                                 <th>protein</th>
                                 <td>{{ product.protein }}</td>
                             </tr>
+                            <tr>
+                                <th>kcal</th>
+                                <td>{{ product.kcal }}</td>
+                            </tr>
                         </tbody>
                         <caption>Nutrient content in 100 g (ml) of product</caption>
                     </table>
@@ -55,9 +59,9 @@
                         <button type="submit" class="btn btn-success ms-3">Edit</button>
                     </div>
                     <div class="form-errors m-1"> {{ form_errors(editFatForm.fat) }} </div>
-                    {{ form_end(editFatForm) }}  
+                {{ form_end(editFatForm) }}
                 
-                    {{ form_start(editCarboForm) }}
+                {{ form_start(editCarboForm) }}
                     <div class="form-label"> {{ form_label(editCarboForm.carbo, 'Carbo') }} </div>
                     <div class="d-flex align-items-start">
                         <div class="input-group">
@@ -67,9 +71,9 @@
                         <button type="submit" class="btn btn-success ms-3">Edit</button>
                     </div>
                     <div class="form-errors m-1"> {{ form_errors(editCarboForm.carbo) }} </div>
-                    {{ form_end(editCarboForm) }}  
+                {{ form_end(editCarboForm) }}
 
-                    {{ form_start(editProteinForm) }}
+                {{ form_start(editProteinForm) }}
                     <div class="form-label"> {{ form_label(editProteinForm.protein, 'Protein') }} </div>
                     <div class="d-flex align-items-start">
                         <div class="input-group">
@@ -79,7 +83,19 @@
                         <button type="submit" class="btn btn-success ms-3">Edit</button>
                     </div>
                     <div class="form-errors"> {{ form_errors(editProteinForm.protein) }} </div>
-                {{ form_end(editProteinForm) }}   
+                {{ form_end(editProteinForm) }}
+
+                {{ form_start(editKcalForm) }}
+                    <div class="form-label"> {{ form_label(editKcalForm.kcal, 'Kcal') }} </div>
+                    <div class="d-flex align-items-start">
+                        <div class="input-group">
+                            {{ form_widget(editKcalForm.kcal, {'attr': {'class': 'form-control'}}) }}
+                            <span class="input-group-text" id="basic-addon2">g</span>
+                        </div>
+                        <button type="submit" class="btn btn-success ms-3">Edit</button>
+                    </div>
+                    <div class="form-errors"> {{ form_errors(editKcalForm.kcal) }} </div>
+                {{ form_end(editKcalForm) }}
             </div>
         </div>
         

@@ -21,6 +21,7 @@ class SetNutrientsToDiary
                 'fat' => $this->content->compute($diaries[$i]->getProduct()->getId(), $nutrients->findOneBy(['name' => 'fat'])->getId(), $diaries[$i]->getQuantity()),
                 'carbo' => $this->content->compute($diaries[$i]->getProduct()->getId(), $nutrients->findOneBy(['name' => 'carbo'])->getId(), $diaries[$i]->getQuantity()),
                 'protein' => $this->content->compute($diaries[$i]->getProduct()->getId(), $nutrients->findOneBy(['name' => 'protein'])->getId(), $diaries[$i]->getQuantity()),
+                'kcal' => $this->content->compute($diaries[$i]->getProduct()->getId(), $nutrients->findOneBy(['name' => 'kcal'])->getId(), $diaries[$i]->getQuantity())
             ]);
         }
         return $diaries;

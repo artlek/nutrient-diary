@@ -48,6 +48,14 @@ class Product
     )]
     private ?float $protein = null;
 
+    #[Assert\Type('float')]
+    #[Assert\Range(
+        min: 0,
+        max: 1000,
+        notInRangeMessage: 'Kcal content must be between {{ min }} and {{ max }} kcal',
+    )]
+    private ?float $kcal = null;
+
     #[ORM\Column]
     private ?bool $isDeleted = null;
 
@@ -139,6 +147,18 @@ class Product
     public function setProtein(float $protein): self
     {
         $this->protein = $protein;
+
+        return $this;
+    }
+
+    public function getKcal(): ?float
+    {
+        return $this->kcal;
+    }
+
+    public function setKcal(float $kcal): self
+    {
+        $this->kcal = $kcal;
 
         return $this;
     }
