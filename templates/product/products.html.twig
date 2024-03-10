@@ -1,0 +1,101 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Products - Nutrient Diary{% endblock %}
+
+{% block body %}
+
+    <h1>Products</h1>
+    <div class="row">
+        <div class="col-lg-6 m-2 flex-fill content">
+            <div class="row content-header p-3">
+                <div class="col">
+                    <h5>Product list</h5>
+                </div>
+            </div>
+            <div class="row p-3">
+                <div class="col">
+                    {% if products %}
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th class="counter"></th>
+                                    <th>name</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% set count = 1 %}
+                                {% for product in pagination %}
+                                <tr>
+                                    <td>{{ count }}. </td>
+                                    <td>
+                                        {{ product.name }}<br>
+                                        {% for nutrient in product.productHasNutrients %}
+                                            <span class="text-small text-gray">
+                                                <span class="fw-bold">{{ nutrient.nutrient.name }}: </span>{{ nutrient.content }}
+                                            </span>&nbsp;
+                                        {% endfor %}
+                                    </td>
+                                    <td>
+                                        <!-- Button trigger modal -->
+                                        <a type="button" class="text-danger" data-bs-toggle="modal" data-bs-target="#{{ product.id }}deleteProductModal">delete</a>
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="{{ product.id }}deleteProductModal" tabindex="-1" aria-labelledby="{{ product.id }}deleteProductModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="{{ product.id }}deleteProductModalLabel">{{ product.name }}</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Do you really want to delete the product?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                        <form action="{{ path('products') }}" method="POST">
+                                                            <input type="hidden" name="DeleteProductId" value="{{ product.id }}">
+                                                            <button type="submit" class="btn btn-danger mt-3 mb-3">Delete product</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% set count = count + 1 %}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <!-- Navigation of paginate -->
+                        <div class="navigation">
+                            {{ knp_pagination_render(pagination, null, {}, {
+                                'align': 'left',
+                                'size': 'small',
+                                'rounded': false,
+                            }) }}
+                        </div>
+                    {% else %}
+                        <p class="no-data">No data</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 m-2 flex-fill content">
+            <div class="row content-header p-3">
+                <div class="col">
+                    <h5>Add product</h5>
+                </div>
+            </div>
+            <div class="row p-3">
+                <div class="col">
+                    {% if nutrients is empty %}
+                        <p class="no-data">No nutrient set. Add it in <a href="{{ path('nutrients') }}" class="link">nutrients tab</a> before adding a product.
+                    {% else %}
+                        {{ form(addProductForm) }}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}About - Nutrient Diary{% endblock %}
+
+{% block body %}
+
+    <h1>Nutrient Diary</h1>
+    <div class="row">
+        <div class="col-lg m-2 content">
+            <div class="row content-header p-3">
+                <div class="col">
+                    <h5>About app</h5>
+                </div>
+            </div>
+            <div class="row p-3">
+                <div class="col">
+                    <p>
+                        With the application, you can easily control consumed nutrients. 
+                        Nutrient Diary is useful for people who are on a diet. 
+                        Every day shows you the quantity of consumed products. It also tell you how many nutrients (e.g. carbohydrates ot fat) you have consumed during the day. 
+                        Moreover you can set the nutrient target to control how many nutrients you should still eat.
+                    </p>
+                    <p>To start just <a href="{{ path('login') }}" class="link">login</a> or <a href="{{ path('register') }}" class="link">register</a>.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg m-2 content">
+            <div class="row content-header p-3">
+                <div class="col">
+                    <h5>Quick start</h5>
+                </div>
+            </div>
+            <div class="row p-3">
+                <div class="col">
+                    <p class="text-dark">
+                        There are three important steps before using the application.
+                        <dl class="row">
+                            <dt class="col-lg-3 text-dark">1. Add some nutrients</dt>
+                            <dd class="col-lg-9">
+                                Go to <a class="link" href="{{ path('nutrients') }}">nutrients tab</a> and add several nutrients. 
+                                Daily target means how much nutrient yoy want to consumption per a day.
+                                If you dont know type 0. You can always change this value in nutrient details.
+                            </dd>
+                        </dl>
+                        <dl class="row">
+                            <dt class="col-lg-3 text-dark">2. Add several products</dt>
+                            <dd class="col-lg-9">
+                                When at least one nutrient is added you can add some products.
+                                Click the <a class="link" href="{{ path('products') }}">products tab</a> and add several products. 
+                                Nutrient content is a value describing how many grams of a nutrient contained in 100 grams of a product.
+                            </dd>
+                        </dl>
+                        <dl class="row">
+                            <dt class="col-lg-3 text-dark">3. Add product to diary</dt>
+                            <dd class="col-lg-9">
+                                Finally you are able to add a product to <a class="link" href="{{ path('diary') }}">the diary</a>.
+                                Choose a day you are interested in. Default it's today.
+                                Choose a product from the list and type product quantity you are going to eat.
+                                Summary section shows you how much nutrients you have ate that day. 
+                                It also displays daily target and value of the ingredient left to consumption.
+                            </dd>
+                        </dl>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg m-2 content">
+            <div class="row content-header p-3">
+                <div class="col">
+                    <h5>Author</h5>
+                </div>
+            </div>
+            <div class="row p-3">
+                <div class="col">
+                    <p>
+                        Artur Lekston
+                        <br>
+                        <a class="link" href="mailto: artur.lekston@gmail.com">Send an email</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

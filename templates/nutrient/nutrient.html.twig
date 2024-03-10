@@ -1,0 +1,105 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ nutrient.name }} - Nutrient Diary{% endblock %}
+
+{% block body %}
+
+    <h1>Nutrient detail</h1>
+    <div class="row">
+        <div class="col-lg-6 m-2 flex-fill content">
+            <div class="row content-header p-3">
+                <div class="col">
+                    <h5>{{ nutrient.name|capitalize }}</h5>
+                </div>
+            </div>
+            <div class="row p-3">
+                <div class="col">
+                    {% if nutrient %}
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th class="nutrient-table">nutrient name</th>
+                                    <td>{{ nutrient.name }}</td>
+                                </tr>
+                                <tr>
+                                    <th class="nutrient-table">nutrient id</th>
+                                    <td>{{ nutrient.id }}</td>
+                                </tr>
+                                <tr>
+                                    <th class="nutrient-table">current daily target</th>
+                                    <td>{{ nutrient.target }} g</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="text-end">
+                            <!-- Button trigger modal -->
+                            <a type="button" class="text-danger" data-bs-toggle="modal" data-bs-target="#deleteNutrientModal">delete</a>
+                            <!-- Modal -->
+                            <div class="modal fade" id="deleteNutrientModal" tabindex="-1" aria-labelledby="deleteNutrientModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="deleteNutrientModalLabel">{{ nutrient.name|capitalize }}</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body text-danger text-start">
+                                            Do you really want to delete the nutrient?<br>
+                                            Nutrients from all products will be deleted.
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <form action="{{ path('nutrients') }}" method="POST">
+                                                <input type="hidden" name="deleteNutrientId" value="{{ nutrient.id }}">
+                                                <button type="submit" class="btn btn-danger mt-3 mb-3">Delete nutrient</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            &nbsp;
+                            <!-- Button trigger offcanva -->
+                            <button class="link" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">target history</button>
+                            <!-- Offcanva -->
+                            <div class="offcanvas offcanvas-end p-3" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
+                                <div class="offcanvas-header">
+                                    <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Target history</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                                </div>
+                                <div class="offcanvas-body">
+                                    <table class="table">
+                                        <tbody>
+                                            {% set count = 1 %}
+                                            {% for target in targets %}
+                                                <tr>
+                                                    <th class="counter">{{ count }}. </th>
+                                                    <th class="counter text-start">{{ target.date }}</th>
+                                                    <td class="text-start">{{ target.value }} g</td>
+                                                </tr>
+                                            {% set count = count + 1 %}
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <p class="no-data">No data</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 m-2 flex-fill content">
+            <div class="row content-header p-3">
+                <div class="col">
+                    <h5>Edit daily target</h5>
+                </div>
+            </div>
+            <div class="row p-3">
+                <div class="col">
+                    {{ form(editNutrientTargetForm) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

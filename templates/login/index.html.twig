@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Login - Nutrient Diary{% endblock %}
+
+{% block body %}
+
+    <div class="row d-flex justify-content-center mt-5">
+        <div class="col-lg m-2 content registration flex-fill">
+            <div class="row content-header p-3">
+                <div class="col">
+                    <h5>Login</h5>
+                </div>
+            </div>
+            <div class="row p-3">
+                <div class="col">
+                {% if error %}
+                    <small class="text-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</small>
+                {% endif %}
+                    <form action="{{ path('login') }}" method="post">
+                        <div class="form-label"><label for="username">Email</label></div>
+                        <input type="text" class="form-control" id="username" name="_username" value="{{ last_username }}">
+                        <div class="form-label"><label for="password">Password</label></div>
+                        <input type="password" class="form-control" id="password" name="_password">
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                        <button type="submit" class="btn btn-success registration-button mt-3 mb-3 d-grid gap-2 col-12 mx-auto">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

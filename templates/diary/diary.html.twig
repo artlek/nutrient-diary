@@ -1,0 +1,148 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ date }} - Nutrient Diary{% endblock %}
+
+{% block body %}
+
+    <h1>Diary</h1>
+    <div class="col-lg-4 my-3">
+        {{ form_start(dateForm) }}
+            <div class="form-label"> {{ form_label(dateForm.date, 'Choose a day') }} </div>
+                <div class="d-flex align-items-start">                   
+                    {{ form_widget(dateForm.date, {'attr': {'class': 'form-control'}}) }}
+                    <button type="submit" class="btn btn-success ms-3">Choose</button>
+                </div>
+            <div class="form-errors m-1"> {{ form_errors(dateForm.date) }} </div>
+        {{ form_end(dateForm) }}  
+    </div>
+    <div class="row">
+        <div class="col-lg m-2 content">
+            <div class="row content-header p-3">
+                <div class="col">
+                    <h5>
+                        Date: {{ date }}
+                        {% if "now"|date("Y-m-d") == date %}
+                            <span class="mx-3 badge bg-warning">today</span>
+                        {% endif %}
+                    </h5>
+                </div>
+            </div>
+            <div class="row p-3">
+                <div class="col">
+                    {% if productsInDiary %}
+                        <div class="table-responsive">
+                            <table class="table my-3">
+                                <thead>
+                                    <tr>
+                                    {% set counter = 1 %}
+                                        <th class="counter"></th>
+                                        <th>product name</th>
+                                        <th>product quantity (g)</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for product in productsInDiary %}
+                                    <tr>                    
+                                        <td>{{ counter }}.</td>
+                                        <td>
+                                            <span>{{ product.product.name }}</span><br>
+                                            {% for nutrient in product.product.productHasNutrients %}
+                                            <span class="text-small">
+                                                {{ nutrient.nutrient.name }}: <span class="text-dark">{{ (nutrient.content * product.quantity / 100)|round(2)}}</span> &nbsp;
+                                            </span>
+                                            {% endfor %}
+                                        </td>
+                                        <td>{{ product.quantity }}</td>
+                                        <td>
+                                            <form action="{{ path('date', { 'date': date}) }}" method="POST">
+                                                <input type="hidden" name="deleteProductId" value="{{ product.id }}">
+                                                <button type="submit" class="delete">delete</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    {% set counter = counter + 1 %}
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <p class="no-data">No data</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg m-2 content">
+            <div class="row content-header p-3">
+                <div class="col">
+                    <h5>Add product to diary</h5>
+                </div>
+            </div>
+            <div class="row p-3">
+                <div class="col">
+                    {% if products %}
+                        {{ form_start(addProductToDiary) }}
+                        <div class="row align-items-start">
+                            <div class="col-md-6">
+                                <div class="form-label">{{ form_label(addProductToDiary.productId, 'choose a product') }}</div>           
+                                {{ form_widget(addProductToDiary.productId) }}
+                                {{ form_errors(addProductToDiary.productId) }}
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-label">{{ form_label(addProductToDiary.quantity, 'quantity (g)') }}</div>                
+                                {{ form_widget(addProductToDiary.quantity) }}
+                                {{ form_errors(addProductToDiary.quantity) }}
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-success btn-sm px-4 my-2">Add</button>
+                        {{ form_end(addProductToDiary) }}
+                    {% else %}
+                        <p class="no-data">
+                            There is no product. Add product in <a class="link" href="{{ path('products') }}">product list</a> before.
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-lg m-2 content">
+            <div class="row content-header p-3">
+                <div class="col">
+                    <h5>Summary</h5>
+                </div>
+            </div>
+            <div class="row p-3">
+                <div class="col">
+                    {% if productsInDiary %}
+                        <table class="table">
+                            <tbody>
+                                    <tr>
+                                        <td></td>
+                                        <td>consumption (g)</td>
+                                        <td>target (g)</td>
+                                        <td>diff (g)</td>
+                                    </tr>
+                                {% for sum in summary %}
+                                    <tr>
+                                        <th class="nutrient-history text-end">{{ sum.nutrient_name }}</th>
+                                        <td>{{ sum.consumption }}</td>
+                                        <td>{{ sum.target }}</td>
+                                        <td>{{ sum.consumption - sum.target }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <p class="no-data">
+                            No data
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+

@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nutrient Diary{% endblock %}
+
+{% block body %}
+   <h1>Nutrient Diary</h1>
+   <div class="row">
+      <div class="col-lg bg-light m-2 p-5 content">
+         <div class="row">
+            <div class="col-md">
+               <h2 class="py-4">
+                  Welcome to Nutrient Diary - simple web app to calculate consumed nutrient. Eat without fear of calorie excess.
+               </h2>
+               <p>Go to <a class="link" href="{{ path('about') }}">about</a> section for more information.</p>
+               <a class="btn btn-success my-2 px-5 me-2 mb-3" role="button" href="{{ path('login')}}">Login</a>
+               <a class="btn btn-primary my-2 px-5 me-2 mb-3" role="button" href="{{ path('register')}}">Sing up</a>
+            </div>
+         </div>
+      </div>
+   </div>
+
+{% endblock %}
