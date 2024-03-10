@@ -16,7 +16,8 @@ Is recommended use Docker to try this app.
 4. Build image in Docker by command: <code>docker-compose build</code> and then <code>docker-compose up -d</code>.
 5. Open app container by command: <code>docker exec -it nutrient-diary-main_fpm_1 bash</code>. Name 'nutrient-diary-main_fpm_1' may be different according what Docker named the container. 
 6. Install vendors: <code>composer install</code>.
-7. Now you can test the app - open localhost:10302 in your webbrowser.
+7. Change folder owner <code>chown -R www-data:www-data /var/www</code>.
+8. Now you can test the app - open localhost:10302 in your webbrowser.
 
 Note that the database is filled with example product and nutrient data. You can use it by loging with <code>artur@email.com</code> and <code>NOPASS</code> password. 
 
