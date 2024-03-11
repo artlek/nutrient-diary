@@ -1,4 +1,9 @@
 # Nutrient Diray App
+
+![symfony](https://img.shields.io/badge/Symfony-000000?style=for-the-badge&logo=Symfony&logoColor=white) 
+![bootstrap](https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white)
+![docker](https://img.shields.io/badge/Docker-2CA5E0?style=for-the-badge&logo=docker&logoColor=white) 
+
 Welcome to Nutrient Diary - simple web app to calculate consumed nutrient.
 
 With the application, you can easily control consumed nutrients. Nutrient Diary is useful for people who are on a diet. Every day shows you the quantity of consumed products. It also indicates you how many nutrients (e.g. carbohydrates or fat) you have consumed during the day. Moreover you can set the nutrient target to control how many nutrients you should still eat. 
@@ -28,5 +33,12 @@ Go to nutrients tab and add several nutrients (for example protein or fat). Dail
 When at least one nutrient is added you can add some products. Click the products tab and add several products. Nutrient content is a value describing how many grams of a nutrient contained in 100 grams of a product. 
 3. Add product to diary
 Finally you are able to add a product to the diary. Choose a day you are interested in. Default it's today. Choose a product from the list and type product quantity you are going to eat. Summary section shows you how much nutrients you have ate that day. It also displays daily target and value of the ingredient left to consumption.
+
+## Screenshots
+![obraz](https://github.com/artlek/nutrient-diary/assets/107640069/f8ac753c-7434-446c-9e18-2a53ee8e0b6c)
+
+![obraz](https://github.com/artlek/nutrient-diary/assets/107640069/655fddad-4b00-4da4-9991-16a7a08c7086)
+
+![obraz](https://github.com/artlek/nutrient-diary/assets/107640069/d067b8d8-8b41-4c62-95fb-aae9f1ddf6e0)
 
 Created only for education purposes.
