@@ -24,10 +24,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {% set count = 1 %}
                                 {% for product in pagination %}
                                 <tr>
-                                    <td>{{ count }}. </td>
+                                    <td>{{ product.counter }}. </td>
                                     <td>
                                         {{ product.name }}<br>
                                         {% for nutrient in product.productHasNutrients %}
@@ -62,7 +61,6 @@
                                         </div>
                                     </td>
                                 </tr>
-                                {% set count = count + 1 %}
                                 {% endfor %}
                             </tbody>
                         </table>

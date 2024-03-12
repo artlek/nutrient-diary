@@ -34,6 +34,8 @@ class Product
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: Diary::class)]
     private Collection $diaries;
 
+    private ?int $counter = null;
+
     public function __construct()
     {
         $this->productHasNutrients = new ArrayCollection();
@@ -137,6 +139,18 @@ class Product
                 $diary->setProduct(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCounter(): ?int
+    {
+        return $this->counter;
+    }
+
+    public function setCounter(?int $counter): static
+    {
+        $this->counter = $counter;
 
         return $this;
     }

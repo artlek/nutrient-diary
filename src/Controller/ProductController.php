@@ -16,12 +16,13 @@ use App\Service\ObjectDeleter\ProductDeleter;
 use App\Service\ObjectDeleter\ObjectDeleter;
 use App\Service\Product\AddProduct;
 use Knp\Component\Pager\PaginatorInterface;
+use App\Service\SetObjectCounter;
 
 class ProductController extends AbstractController
 {
     #[Route('/products', name: 'products')]
     public function showProducts(
-        Request $request, EntityManagerInterface $em, CheckProductNameExist $checkProductNameExist, ProductDeleter $productDeleter, AddProduct $addProduct, PaginatorInterface $paginator): Response
+        Request $request, EntityManagerInterface $em, CheckProductNameExist $checkProductNameExist, ProductDeleter $productDeleter, AddProduct $addProduct, PaginatorInterface $paginator, SetObjectCounter $setObjectCounter): Response
     {   
         $this->denyAccessUnlessGranted('ROLE_USER');
         $nutrients = $em->getRepository(Nutrient::class)->findBy(['User' => $this->getUser()]);
@@ -57,8 +58,9 @@ class ProductController extends AbstractController
 
         $products = $em->getRepository(Product::class)->findBy([
             'isDeleted' => false,
-            'User' => $this->getUser()
+            'User' => $this->getUser(),
             ]);
+        $setObjectCounter->set($products);
 
         $pagination = $paginator->paginate(
             $products,
